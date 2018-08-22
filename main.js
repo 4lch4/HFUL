@@ -1,36 +1,37 @@
-var express = require("express");
-var app = express();
-var router = express.Router();
-var path = __dirname + '/views/';
-var bodyParser  = require('body-parser');
+const express = require('express')
+const app = express()
+const router = express.Router()
+const path = require('path')
+const viewDir = path.join(__dirname, 'views')
+const bodyParser = require('body-parser')
 
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({extended:true}));
+app.set('view engine', 'ejs')
+app.use(bodyParser.urlencoded({extended: true}))
 
-router.use(function (req,res,next) {
-  console.log(req.method + " " + req.url);
-  next();
-});
+router.use(function (req, res, next) {
+  console.log(req.method + ' ' + req.url)
+  next()
+})
 
-router.get("/",function(req,res){
-    res.statusCode = 200;
-    res.render('mainTemplate', {title: "Index"});
-});
+router.get('/', function (req, res) {
+  res.statusCode = 200
+  res.render('mainTemplate', {title: 'Index'})
+})
 
-router.get("/about",function(req,res){
-  res.sendFile(path + "about.html");
-});
+router.get('/about', function (req, res) {
+  res.sendFile(path.join(viewDir, 'about.html'))
+})
 
-router.get("/contact",function(req,res){
-  res.sendFile(path + "contact.html");
-});
+router.get('/contact', function (req, res) {
+  res.sendFile(path.join(viewDir, 'contact.html'))
+})
 
-app.use("/",router);
+app.use('/', router)
 
-app.use("*",function(req,res){
-  res.sendFile(path + "404.html");
-});
+app.use('*', function (req, res) {
+  res.sendFile(path.join(viewDir, '404.html'))
+})
 
-app.listen(80,function(){
-  console.log("Live at Port 80");
-});
+app.listen(80, function () {
+  console.log('Live at Port 80')
+})
